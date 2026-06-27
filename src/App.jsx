@@ -1,8 +1,13 @@
 import { Canvas, useLoader } from "@react-three/fiber";
-import { OrbitControls, Center } from "@react-three/drei";
+import { Center } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 import * as THREE from "three";
+
+import Ascii from "./Ascii";
+import Controls from "./Controls";
+
+import "./App.css"
 
 function Model() {
   const gltf = useLoader(GLTFLoader, '/models/earth.glb')
@@ -16,11 +21,12 @@ function Model() {
 
 function Scene3D() {
   return (
-    <Canvas style={{ height: "100vh", background: "black" }}>
+    <Canvas style={{ height: "100vh", background: "transparent" }}>
       <ambientLight intensity={2} />
       <directionalLight position={[5, 5, 5]} intensity={5}/>
       <Model />
-      <OrbitControls />
+      <Ascii />
+      <Controls />
     </Canvas>
   )
 }
