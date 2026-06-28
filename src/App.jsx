@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useMousePosition, getWindowDimensions } from "./Utils";
+import { useMousePosition, getWindowDimensions, useScroll } from "./Utils";
 
 import { Canvas, useLoader, useFrame } from "@react-three/fiber";
 import { Center } from "@react-three/drei";
@@ -27,6 +27,8 @@ function Model() {
 }
 
 function Scene3D() {
+  const scroll = useScroll();
+
   const MIN_LUM_POS = [-5, 5, 0];
   const MAX_LUM_POS = [5, -5, 1];
 
@@ -44,11 +46,15 @@ function Scene3D() {
     ]);
   }, [mousePosition]);
 
+  useEffect(() => {
+    console.log(scroll);
+  }, [scroll]);
+
   return (
     <div
       id="scene-container"
       style={{
-        position: "absolute",
+        position: "fixed",
         left: `${leftPos}px`,
         top: 0,
         width: `calc(100vw - ${leftPos}px)`,
@@ -93,6 +99,7 @@ export default function App() {
     <>
       <HeroPresentation />
       <Scene3D />
+      <div style={{"height": "300vh", width: "1px"}}></div>
     </>
   )
 }

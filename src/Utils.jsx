@@ -49,3 +49,21 @@ export function useWindowDimensions() {
   return windowDimensions;
 }
 
+export function useScroll() {
+  const [scroll,setScroll] = useState(0);
+
+  useEffect(()=>{
+    const update = ()=>{
+      setScroll(
+        window.scrollY /
+        window.innerHeight
+      );
+    };
+
+    window.addEventListener("scroll", update);
+
+    return ()=> window.removeEventListener("scroll", update);
+  },[]);
+
+  return scroll;
+}

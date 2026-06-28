@@ -36,7 +36,7 @@ export default function Ascii() {
     el.style.left = "-1%";
 
     // moitié gauche du Canvas
-    el.style.width = "52%";
+    el.style.width = "100%";
     el.style.height = "100%";
 
     el.style.color = "white";
