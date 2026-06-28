@@ -9,43 +9,56 @@ export default function Ascii() {
 
   const effect = useRef(null);
 
+
   useEffect(() => {
+
     effect.current = new AsciiEffect(
       gl,
-      ` .:-=+*#%@ `,
+      " .:-=+*#%@ ",
       {
         invert: true
       }
     );
 
+    // taille réelle du Canvas
     effect.current.setSize(
       size.width,
       size.height
     );
 
-    effect.current.domElement.className = "ascii";
 
-    effect.current.domElement.style.position = "absolute";
-    effect.current.domElement.style.top = "0";
-    effect.current.domElement.style.left = "-1%";
+    const el = effect.current.domElement;
 
-    effect.current.domElement.style.width = "52%";
-    effect.current.domElement.style.height = "100%";
+    el.className = "ascii";
 
-    effect.current.domElement.style.color = "white";
-    effect.current.domElement.style.backgroundColor = "var(--backgroundColor)";
+    el.style.position = "absolute";
+    el.style.top = "0";
+    el.style.left = "-1%";
 
-    document.body.appendChild(
-      effect.current.domElement
+    // moitié gauche du Canvas
+    el.style.width = "52%";
+    el.style.height = "100%";
+
+    el.style.color = "white";
+    el.style.backgroundColor = "var(--backgroundColor)";
+
+    el.style.pointerEvents = "auto";
+
+   document
+    .getElementById("scene-container")
+    .appendChild(
+        effect.current.domElement
     );
 
     return () => {
-      document.body.removeChild(
-        effect.current.domElement
-      );
+
+      if(el.parentNode){
+        el.parentNode.removeChild(el);
+      }
 
     };
-  }, [gl]);
+
+  }, [gl, size]);
 
   useFrame(() => {
     if(effect.current){
@@ -56,8 +69,7 @@ export default function Ascii() {
 
       scene.rotateY(0.01);
     }
-
   }, 1);
-
   return null;
+
 }

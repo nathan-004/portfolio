@@ -1,3 +1,30 @@
 :root {
     --backgroundColor : black;
+    --textColor: white;
+    --primaryColor: rgb(255, 255, 255);
+}
+
+@font-face {
+    font-family: neogen;
+    src: url("/public/fonts/Neogen/NeogenBlack-XGl6P.ttf");
+}
+
+@font-face {
+    font-family: oxanium;
+    src: url("/public/fonts/Oxanium/Oxanium-VariableFont_wght.ttf");
+}
+
+h1 {
+    font-family: neogen;
+    font-size: 100px;
+}
+
+p {
+    font-family: neogen;
+    font-size: 22px;
+}
+
+ul {
+    font-family: oxanium;
+    font-weight: 500;
 }
