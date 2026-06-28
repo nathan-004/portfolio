@@ -9,17 +9,14 @@ export default function Ascii() {
 
   const effect = useRef(null);
 
-
   useEffect(() => {
-
     effect.current = new AsciiEffect(
       gl,
-      ` .:,'-^=*+?!|0#X%WM@`,
+      ` .:-=+*#%@ `,
       {
         invert: true
       }
     );
-
 
     effect.current.setSize(
       size.width,
@@ -30,18 +27,17 @@ export default function Ascii() {
 
     effect.current.domElement.style.position = "absolute";
     effect.current.domElement.style.top = "0";
-    effect.current.domElement.style.left = "0";
+    effect.current.domElement.style.left = "-1%";
 
-    effect.current.domElement.style.width = "100%";
+    effect.current.domElement.style.width = "52%";
     effect.current.domElement.style.height = "100%";
 
     effect.current.domElement.style.color = "white";
-    effect.current.domElement.style.backgroundColor = "black";
+    effect.current.domElement.style.backgroundColor = "var(--backgroundColor)";
 
     document.body.appendChild(
       effect.current.domElement
     );
-
 
     return () => {
       document.body.removeChild(
@@ -49,25 +45,19 @@ export default function Ascii() {
       );
 
     };
-
-
   }, [gl]);
 
-
-
   useFrame(() => {
-
     if(effect.current){
-
       effect.current.render(
         scene,
         camera
       );
 
+      scene.rotateY(0.01);
     }
 
   }, 1);
-
 
   return null;
 }

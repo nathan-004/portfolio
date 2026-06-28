@@ -26,7 +26,7 @@ function Scene3D() {
       <directionalLight position={[5, 5, 5]} intensity={5}/>
       <Model />
       <Ascii />
-      <Controls />
+      { /*<Controls />*/ }
     </Canvas>
   )
 }
