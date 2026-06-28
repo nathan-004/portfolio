@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useMousePosition, getWindowDimensions } from "./Utils";
 
-import { Canvas, useLoader } from "@react-three/fiber";
+import { Canvas, useLoader, useFrame } from "@react-three/fiber";
 import { Center } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
@@ -14,6 +15,10 @@ import "./App.css"
 function Model() {
   const gltf = useLoader(GLTFLoader, '/models/earth.glb')
 
+  useFrame(() => {
+    gltf.scene.rotateY(0.01);
+  }, 1);
+  
   return (
     <Center>
       <primitive object={gltf.scene} scale={0.005}/>
@@ -22,7 +27,22 @@ function Model() {
 }
 
 function Scene3D() {
+  const MIN_LUM_POS = [-5, 5, 0];
+  const MAX_LUM_POS = [5, -5, 1];
+
   const [leftPos, setLeftPos] = useState(750);
+  const [lumPos, setLumPos] = useState([5, 5, 5]);
+  const mousePosition = useMousePosition();
+
+  useEffect(() => {
+    const sizes = getWindowDimensions();
+
+    setLumPos([
+      MIN_LUM_POS[0] + (mousePosition.x * (MAX_LUM_POS[0] - MIN_LUM_POS[0]) / sizes.width),
+      MIN_LUM_POS[1] + (mousePosition.y * (MAX_LUM_POS[1] - MIN_LUM_POS[1]) / sizes.height),
+      MIN_LUM_POS[2] + (mousePosition.x * (MAX_LUM_POS[2] - MIN_LUM_POS[2]) / sizes.width)
+    ]);
+  }, [mousePosition]);
 
   return (
     <div
@@ -42,10 +62,10 @@ function Scene3D() {
           background:"transparent"
         }}
       >
-        <ambientLight intensity={2} />
+        <ambientLight intensity={1} />
 
         <directionalLight
-          position={[5,5,5]}
+          position={lumPos}
           intensity={5}
         />
         <Model />

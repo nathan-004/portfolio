@@ -66,8 +66,6 @@ export default function Ascii() {
         scene,
         camera
       );
-
-      scene.rotateY(0.01);
     }
   }, 1);
   return null;
