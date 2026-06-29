@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useMousePosition, getWindowDimensions, useScroll } from "./Utils";
 
 import { Canvas, useLoader, useFrame } from "@react-three/fiber";
@@ -12,19 +12,85 @@ import Controls from "./Controls";
 
 import "./App.css"
 
-function Model() {
+const rotationFrame = 0.01;
+
+function Earth(progress) {
+  let prog = progress.progress;
   const gltf = useLoader(GLTFLoader, '/models/earth.glb')
+  
+  const [scaleValue, setScaleValue] = useState(0.005 - prog * 0.005); 
 
   useFrame(() => {
-    gltf.scene.rotateY(0.01);
+    gltf.scene.rotateY(rotationFrame);
   }, 1);
+
+  useEffect(() => {
+    gltf.scene.position.x = prog * 5;
+    setScaleValue(0.005 - prog * 0.005);
+  }, [prog]);
   
   return (
-    <Center>
-      <primitive object={gltf.scene} scale={0.005}/>
-    </Center>
+    <primitive object={gltf.scene} scale={scaleValue}/>
   )
 }
+
+// function FlowLines(progress){
+//   let scale = progress.progress;
+//   const curves = useMemo(() => {
+//     const curves = [];
+
+//     for(let i = 0; i < 20; i++){
+//       const start = new THREE.Vector3(
+//         0,
+//         0,
+//         0
+//       );
+
+//       const end = new THREE.Vector3(
+//         0,
+//         -5,
+//         0
+//       );
+
+//       const middle = new THREE.Vector3(
+//         Math.random()*4 - 2,
+//         Math.random()*4-5,
+//         0
+//       );
+
+//       curves.push(
+//         new THREE.CatmullRomCurve3([
+//           start,
+//           middle,
+//           end
+//         ])
+//       );
+//     }
+//     return curves;
+//   }, []);
+
+//   return (
+//     <group scale={[scale, scale, scale]}>
+//       {curves.map((curve, index)=>(
+//           <mesh key={index}>
+//             <tubeGeometry
+//               args={[
+//                 curve,
+//                 100,
+//                 0.01,
+//                 8,
+//                 false
+//               ]}
+//             />
+//             <meshBasicMaterial
+//               color="white"
+//             />
+//           </mesh>
+//         ))
+//       }
+//     </group>
+//   );
+// }
 
 function Scene3D() {
   const scroll = useScroll();
@@ -74,7 +140,7 @@ function Scene3D() {
           position={lumPos}
           intensity={5}
         />
-        <Model />
+        <Earth progress={scroll}/>
         <Ascii />
       </Canvas>
     </div>
@@ -94,12 +160,16 @@ function HeroPresentation() {
   )
 }
 
+function AboutMe() {
+  
+}
+
 export default function App() {
   return (
     <>
       <HeroPresentation />
       <Scene3D />
-      <div style={{"height": "300vh", width: "1px"}}></div>
+      <div style={{"height": "100vh", width: "1px", "top": "100vh", "position": "relative"}}></div>
     </>
   )
 }
