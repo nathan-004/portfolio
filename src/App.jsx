@@ -161,7 +161,57 @@ function HeroPresentation() {
 }
 
 function AboutMe() {
-  
+  return (
+    <section
+      style={{
+        minHeight: "100vh",
+        paddingTop: "100vh",
+        position: "relative"
+      }}
+    >
+      <div className="cards-container">
+        <div className="card">
+          <h2>À propos de moi</h2>
+          <p>
+            Je suis étudiant au lycée Nelson Mandela et je poursuivrai
+            prochainement mes études dans le domaine de l'informatique.
+          </p>
+          <p>
+            Passionné par les sciences et les nouvelles technologies, je
+            cherche constamment à comprendre le fonctionnement des systèmes
+            qui nous entourent et à explorer de nouveaux domaines.
+          </p>
+        </div>
+
+        <div className="card">
+          <h2>Mes centres d'intérêt</h2>
+          <p>
+            Je m'intéresse particulièrement à l'intelligence artificielle,
+            l'informatique, l'astronomie, l'aérospatial et les technologies
+            émergentes.
+          </p>
+          <p>
+            J'apprécie comprendre les concepts en profondeur, expérimenter
+            de nouvelles idées et découvrir comment la science et la
+            technologie peuvent transformer notre quotidien.
+          </p>
+        </div>
+
+        <div className="card">
+          <h2>Ma vision</h2>
+          <p>
+            Je souhaite développer des compétences solides dans les domaines
+            du numérique et participer à la création de solutions innovantes.
+          </p>
+          <p>
+            Mon objectif est de continuer à apprendre, relever de nouveaux
+            défis et repousser mes limites à travers des expériences
+            concrètes.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default function App() {
@@ -169,7 +219,7 @@ export default function App() {
     <>
       <HeroPresentation />
       <Scene3D />
-      <div style={{"height": "100vh", width: "1px", "top": "100vh", "position": "relative"}}></div>
+      <AboutMe />
     </>
   )
 }
